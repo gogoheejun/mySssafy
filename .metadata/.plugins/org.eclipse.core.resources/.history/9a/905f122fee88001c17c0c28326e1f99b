@@ -1,0 +1,21 @@
+import java.util.ArrayDeque;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class QueueAPITest {
+
+	public static void main(String[] args) {
+		
+//		Queue<String> queue = new LinkedList<>();
+		Queue<String> queue = new ArrayDeque<>();//링크드리스트나 어레이덱 모두 Queue를 구현한 것이기 때문에 내부동작은 달라도 동작결과는 똑같다.
+		queue.offer("a");
+		queue.offer("b");
+		queue.offer("c");
+		queue.offer("d");
+		queue.offer("e");
+		System.out.println(queue.size()+"//"+queue.isEmpty());
+		System.out.println(queue.poll()+"//"+queue.toString());
+		System.out.println(queue.poll()+"//"+queue.toString());
+		System.out.println(queue.peek()+"//"+queue.toString());
+	}
+}

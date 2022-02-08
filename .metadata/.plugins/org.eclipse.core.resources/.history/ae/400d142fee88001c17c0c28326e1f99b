@@ -1,0 +1,58 @@
+package makeLinkedList;
+
+//앞으로 직접 구현하는 건 거의 이거만 쓰지 막 중간에 넣고 중건꺼 삭제하고 그런거 거의 안함. 맨 앞에 넣고빼는거만 확실히 알아라.
+public class Stack {
+
+	private Node top;
+
+	public void push(String data) {
+		//첫번째 노드(top)으로 삽입
+		top = new Node(data, top);
+	}
+
+	public String pop() {
+		if(isEmpty()) {
+			return null;
+		}
+		//첫번째 노드 삭제
+		Node popNode = top;
+		top = popNode.link;
+		
+		popNode.link = null;
+		return popNode.data;
+	}
+
+	public boolean isEmpty() {
+		return top == null;
+	}
+	
+	@Override
+	public String toString() {
+		// top부터 마지막노드까지 쭉 돌면서 data를 문자열로 합치기
+		StringBuilder sb = new StringBuilder();
+		sb.append("Stack [");
+		for(Node currNode = top; currNode!= null; currNode = currNode.link){ //와 이거 신기하다...
+			sb.append(currNode.data).append(",");
+		}
+		if(!isEmpty())sb.setLength(sb.length()-1); //맨 마지막 하나(콤마) 지우기
+		sb.append("]");
+		return sb.toString();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

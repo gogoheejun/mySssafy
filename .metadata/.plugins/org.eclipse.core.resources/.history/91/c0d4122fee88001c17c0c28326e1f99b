@@ -1,0 +1,32 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+public class StackBrowerTest {
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		Stack<String> backward = new Stack<String>();
+		Stack<String> forward = new Stack<String>();
+
+		String current = "http://www.ssafy.com";
+
+		while(true) {
+			String input = in.readLine();
+
+			if(input.charAt(0) =='Q') break;
+			 StringTokenizer st = new StringTokenizer(input);
+			 switch(st.nextToken()) {
+			 
+			 case "V": //visit
+				 backward.push(current);
+				 
+			 }
+
+		}
+	}
+
+}

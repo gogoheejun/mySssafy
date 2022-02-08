@@ -1,0 +1,23 @@
+1. Scanner + sysout + 입력값(static 변수) + static 배열
+2. Scanner + sysout + 입력값(local변수) + 배열(method 인자로 전달)
+3. BufferedReader + StringBuilder + 입력값(static 변수) + static 배열
+4. BufferedReader + StringBuilder + 입력값(local변수) + 배열(method 인자로 전달)
+
+-- 백준 15649 N과 M문제로 테스트
+-- https://www.acmicpc.net/problem/15649
+
+3개중 2개를 뽑는 방법(순열, 조합)
+순열: 순서의 의미가 있다
+예) 1 2 3 (N:2)
+1  2
+1  3
+2  1
+2  3
+3  1
+3  2
+
+조합: 순서의 의미가 없다
+예) 1 2 3  (N:2)
+1  2
+1  3
+2  3

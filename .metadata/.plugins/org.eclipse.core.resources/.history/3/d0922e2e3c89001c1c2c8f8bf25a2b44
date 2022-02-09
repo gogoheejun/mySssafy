@@ -1,0 +1,28 @@
+import java.util.Arrays;
+import java.util.Scanner;
+/*
+4 2
+1 2 3 4
+ */
+public class 순조부 {
+
+
+	static int N,R;
+	static int[] input, numbers; // input : 입력수배열, numbers : 선택수배열
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt();
+		R = sc.nextInt();
+		
+		input = new int[N];
+		numbers = new int[R];
+		
+		for (int i = 0; i < N; i++) {
+			input[i] = sc.nextInt();
+		}
+		combination(0, 0);
+	}
+	
+
+}

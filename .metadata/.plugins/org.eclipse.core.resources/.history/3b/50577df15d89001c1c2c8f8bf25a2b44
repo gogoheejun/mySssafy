@@ -1,0 +1,10 @@
+﻿package test;
+
+//Entity, VO(value Object), Bean, DTO(Data Tranfer Object)
+public class Book {
+	private String title;
+	private String author;
+	private int page;
+	
+	
+}

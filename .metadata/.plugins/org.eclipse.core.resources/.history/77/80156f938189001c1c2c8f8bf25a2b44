@@ -1,0 +1,49 @@
+package ws0209;
+
+import java.util.Scanner;
+
+public class No6_BOJ2491_수열 {
+
+	static int N;
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int increaseCnt = 0;
+		int sameCnt = 0;
+		int decreaseCnt = 0;
+		
+		int status = -1;//1:증가추세, 0:감소추세
+		
+		int answer = 0;
+		int lastNum = -1;
+		for(int i=0; i<N; i++) {
+			int nowNum = sc.nextInt();
+			if(nowNum > lastNum) {
+				if(status == 1 || status == -1) {
+					increaseCnt++;
+				}else if( status == 0) {//감소하다 증가
+					increaseCnt++;
+					//decreaseCnt 초기화
+					if(decreaseCnt+sameCnt>answer) {
+						answer = decreaseCnt+sameCnt;
+					}
+					decreaseCnt = 0;
+					sameCnt = 0;
+				}
+			}
+			if(nowNum < lastNum) {
+				if(status == 0 || status == -1) {
+					decreaseCnt++;
+				}else if( status == 0) {//증가하다 감소
+					decreaseCnt++;
+					//increaseCnt 초기화
+					if(increaseCnt+sameCnt>answer) {
+						answer = increaseCnt+sameCnt;
+					}
+					increaseCnt = 0;
+					sameCnt = 0;
+				}
+			}
+		}
+		System.out.println(answer);
+	}
+}

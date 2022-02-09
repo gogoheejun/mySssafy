@@ -1,11 +1,9 @@
-package com.ssafy.pcs;
+package professor;
 
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.SynchronousQueue;
-/**
- * @author kimtaehee
- */
+
 public class CombinationTest {
 
 	static int N,R;

@@ -7,6 +7,13 @@ public class CompleteBinaryTree {
 	private int SIZE;
 	private int lastIndex;// 마지막에 추가된 인덱스 관리
 
+/*
+  	  A
+ 	B	C
+   D E F G
+  H I
+  
+ */
 	public CompleteBinaryTree(int size) {
 		nodes = new char[size + 1]; // 1인덱스부터 사용하므로 +1크기로 잡기
 		SIZE = size;
@@ -88,5 +95,63 @@ public class CompleteBinaryTree {
 			++level;
 		}
 
+	}
+	//-------DFS
+	public void dfsByBreOrder() {
+		System.out.println();
+		dfsByBreOrder(1);//오버로딩-이렇게 하면 밖에서 dfs부를때 항상 시작점을 1로 시작할 수 있게 됨.
+		System.out.println();
+	}
+	public void dfsByInOrder() {
+		System.out.println();
+		dfsByInOrder(1);//오버로딩-이렇게 하면 밖에서 dfs부를때 항상 시작점을 1로 시작할 수 있게 됨.
+		System.out.println();
+	}
+	public void dfsByPostOrder() {
+		System.out.println();
+		dfsByPostOrder(1);//오버로딩-이렇게 하면 밖에서 dfs부를때 항상 시작점을 1로 시작할 수 있게 됨.
+		System.out.println();
+	}
+//---dfsprivate함수들
+	private void dfsByBreOrder2(int current) {
+		//현재 노드 방문
+		System.out.print(nodes[current]+"\t");
+		//현재노드의 자식노드들 방문
+		
+		if(current*2 <= lastIndex) dfsByBreOrder(current*2);
+		if(current*2+1 <= lastIndex) dfsByBreOrder(current*2+1);
+	}
+	//위랑 똑같은건데 아래처럼하면 기저조건이 좀더 잘 보이는듯
+	private void dfsByBreOrder(int current) {
+		if(current > lastIndex) return;
+		//현재 노드 방문
+		System.out.print(nodes[current]+"\t");
+		//현재노드의 자식노드들 방문
+		
+		dfsByBreOrder(current*2);
+		dfsByBreOrder(current*2+1);
+	}
+	
+	private void dfsByInOrder(int current) {
+		if(current > lastIndex) return;
+		
+		//현재노드의 자식노드들 방문
+		
+		dfsByBreOrder(current*2);
+		//현재 노드 방문
+		System.out.print(nodes[current]+"\t");
+		dfsByBreOrder(current*2+1);
+	}
+	
+	private void dfsByPostOrder(int current) {
+		if(current > lastIndex) return;
+		
+		//현재노드의 자식노드들 방문
+		
+		dfsByBreOrder(current*2);
+		dfsByBreOrder(current*2+1);
+		
+		//현재 노드 방문
+		System.out.print(nodes[current]+"\t");
 	}
 }

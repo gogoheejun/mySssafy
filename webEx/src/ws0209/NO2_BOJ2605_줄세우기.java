@@ -3,7 +3,7 @@ package ws0209;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
-
+//제출완료
 public class NO2_BOJ2605_줄세우기 {
 
 	static int N;

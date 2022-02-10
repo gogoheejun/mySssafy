@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.sound.midi.Soundbank;
-
+//제출완료
 public class No1_BOJ2309_일곱난쟁이 {
 
 	static int N = 9;

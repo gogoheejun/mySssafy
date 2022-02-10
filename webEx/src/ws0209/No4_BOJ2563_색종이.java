@@ -2,7 +2,7 @@ package ws0209;
 
 import java.util.Arrays;
 import java.util.Scanner;
-
+//제출완료
 public class No4_BOJ2563_색종이 {
 
 	static int[][] paper = new int[100][100];

@@ -10,8 +10,12 @@ public class CompleteBinaryTreeTest {
 			tree.add((char)(65+i)); //A,B,C,D...
 		}
 		
-		tree.bfs();
-		tree.bfs2();
+//		tree.bfs();
+//		tree.bfs2();
+		
+		tree.dfsByBreOrder();
+		tree.dfsByInOrder();
+		tree.dfsByPostOrder();
 	}
 
 }

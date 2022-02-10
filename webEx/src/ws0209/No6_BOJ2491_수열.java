@@ -3,7 +3,7 @@ package ws0209;
 import java.io.IOException;
 
 import java.util.Scanner;
-
+//제출완료
 public class No6_BOJ2491_수열 {
 
 	public static void main(String[] args) {

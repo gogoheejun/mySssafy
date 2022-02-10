@@ -31,7 +31,7 @@ public class CompleteBinaryTree {
 
 		if (isFull())
 			return;
-		nodes[++lastIndex] = e;
+		nodes[++lastIndex] = e;//인덱스 0 비워뒀음.
 	}
 
 	public void bfs() {
@@ -71,7 +71,7 @@ public class CompleteBinaryTree {
 		Queue<Integer> qu = new LinkedList<>();
 
 		// 루트가 가장 먼저 탐색되도록 qu에 넣기
-		qu.offer(1);
+		qu.offer(1);//0넣으면 곱해도 계속 0이라 무한반복됨...
 		int level = 0;
 		while (!qu.isEmpty()) {
 			System.out.print("level "+level+" : ");

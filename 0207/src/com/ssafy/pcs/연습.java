@@ -1,45 +1,35 @@
 package com.ssafy.pcs;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class 연습 {
 	
-	static int N,R; //N:입력할숫자 개수, R:뽑을 숫자 개수
-	static int[] input, numbers; //input:N개의 입력숫자들, numbers:R개의 뽑은 숫자들
-	static boolean[] isSelected;
-
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		N = sc.nextInt();
-		R = sc.nextInt();
-		
-		input = new int[R];
-		numbers = new int[R];
-		isSelected = new boolean[N];
-		
-		for(int i=0; i<N; i++) {
-			input[i] = sc.nextInt();
+		bfs();
+	}
+	
+	public static void bfs() {
+		Queue<Integer> q = new LinkedList<Integer>();
+		char[] nodes = {0,'a','b','c','d','e','f','g','h','i','j','k','l'};// 트리에 문자저장할거임
+		int lastIdx = 11;
+		q.offer(1);
+		int level = 0;
+		while(!q.isEmpty()) {
+			System.out.print("level:"+level+" ");
+			int size = q.size();
+			for(int i=0; i<size; i++) {
+				int current = q.poll();
+				System.out.print(nodes[current]+" ");
+				if(current*2 <= lastIdx) q.offer(current*2);
+				if(current*2 +1 <= lastIdx) q.offer(current*2+1);
+			}
+			level++;
+			System.out.println();
 		}
-		
-		permutation(0);
 		
 	}
-	public static void permutation(int cnt) {
-		
-		if(cnt == R) {
-			
-			return;
-		}
-		
-		for(int i=0; i<N; i++) {
-			if(!isSelected[i]) continue;
-			
-			numbers[cnt] = input[i];
-			isSelected[i] = true;
-			
-			permutation(cnt+1);
-			isSelected[i] = false;
-		}
-	}
-
 }

@@ -14,7 +14,7 @@
 	</section>
 	<section name="completion_proposal_size">
 		<item key="size.x" value="538"/>
-		<item key="size.y" value="317"/>
+		<item key="size.y" value="318"/>
 	</section>
 	<section name="quick_assist_proposal_size">
 	</section>
@@ -47,5 +47,7 @@
 		<item key="DIALOG_WIDTH" value="1403"/>
 		<item key="DIALOG_HEIGHT" value="834"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+	<section name="RenameInformationPopup">
 	</section>
 </section>

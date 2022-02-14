@@ -21,14 +21,10 @@ public class No01_BOJ2309_일곱난쟁이 {
 		for(int i=0; i<N; i++) {
 			heights[i] = sc.nextInt();
 		}
-//		System.out.println(Arrays.toString(heights));
 		
 		combi(0,0);
 		Arrays.sort(answer);
 		for(int h : answer) {
-//			System.out.println("답------");
-//			System.out.println(Arrays.toString(selected)+"//sum: "+sum);
-
 			System.out.println(h);
 		}
 	}
@@ -40,12 +36,6 @@ public class No01_BOJ2309_일곱난쟁이 {
 				sum +=elem;
 			}
 			if(sum == 100) {
-//				for(int h : selected) {
-//					System.out.println("답------");
-//					System.out.println(Arrays.toString(selected)+"//sum: "+sum);
-//
-//					System.out.println(h);
-//				}
 				flag = 1;
 				answer = selected;
 				return;

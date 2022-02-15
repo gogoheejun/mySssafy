@@ -2,17 +2,15 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class NextPermutationTest {
-	static int N,R;
-	static int[] input, numbers; // input : 입력수배열, numbers : 선택수배열
+	static int N;
+	static int[] input;
 	
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
 		N = sc.nextInt();
-		R = sc.nextInt();
 		
 		input = new int[N];
-		numbers = new int[R];
 		
 		for (int i = 0; i < N; i++) {
 			input[i] = sc.nextInt();
@@ -41,7 +39,7 @@ public class NextPermutationTest {
 		
 		//3. 교환위치와 교환할 값 교환하기
 		swap(i-1,j);
-		
+		 
 		//4. 교환위치 뒤(꼭대기)부터 맨 뒤까지 만들수있는 가장 작은 순열 생성(오름차순정렬)
 		int k = N-1;
 		while(i<k) {

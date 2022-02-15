@@ -7,7 +7,7 @@ import java.util.Scanner;
  */
 // nPr
 // n개의 수 입력받아 처리
-public class PermutationTest {
+public class 비트마스크PermutationTest {
 
 	static int N,R;
 	static int[] input, numbers; // input : 입력수배열, numbers : 선택수배열

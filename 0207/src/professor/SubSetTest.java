@@ -1,4 +1,4 @@
-package com.ssafy.pcs;
+
 
 import java.util.Scanner;
 /**

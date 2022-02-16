@@ -1,9 +1,13 @@
+package professor;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 /**
- * @author kimtaehee
+ 입력:
+ 10
+ 1 4 1 6 6 10 5 7 3 8 5 9 3 5 8 11 2 13 12 14
  */
 public class MeetingRoomGreedyTest {
 

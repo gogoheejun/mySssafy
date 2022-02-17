@@ -1,0 +1,34 @@
+완전탐색-----------------------------------------------------------   
+[문제] 순열/조합(난이도: 하) 
+품: https://www.acmicpc.net/problem/15649   N과 M (1) - 중복되지 않은 순열
+https://www.acmicpc.net/problem/15650   N과 M (2) - 중복되지 않은 조합
+https://www.acmicpc.net/problem/15651   N과 M (3) - 중복을 허용하는 순열
+https://www.acmicpc.net/problem/15652   N과 M (4) - 중복을 허용하는 조합
+https://www.acmicpc.net/problem/15654   N과 M (5) - 중복되지 않은 순열(사용자 입력)
+https://www.acmicpc.net/problem/15655   N과 M (6) - 중복되지 않은 조합(사용자 입력) 
+https://www.acmicpc.net/problem/15656   N과 M (7) - 중복을 허용하는 순열(사용자 입력)
+https://www.acmicpc.net/problem/15657   N과 M (8) - 중복을 허용하는 조합(사용자 입력)
+https://www.acmicpc.net/problem/15663   N과 M (9)
+https://www.acmicpc.net/problem/15664   N과 M (10)
+https://www.acmicpc.net/problem/5665    N과 M (11)
+https://www.acmicpc.net/problem/15666   N과 M (12)
+----------------------------------------------------------------
+[문제] 순열/조합(난이도: 중)   
+https://www.acmicpc.net/problem/1018(Silver5)  
+https://www.acmicpc.net/problem/1182(Silver2)  
+https://www.acmicpc.net/problem/1451(Silver1)  
+https://www.acmicpc.net/problem/1527(Silver1)
+https://www.acmicpc.net/problem/1535(Silver2)  
+https://www.acmicpc.net/problem/2231(Bronze2)  
+https://www.acmicpc.net/problem/2309(Bronze2)  
+https://www.acmicpc.net/problem/2503(Silver5)
+https://www.acmicpc.net/problem/2798(Bronze2)  
+https://www.acmicpc.net/problem/3085(Silver4)
+https://www.acmicpc.net/problem/10448(Bronze2) 
+https://www.acmicpc.net/problem/10819(Silver2)
+https://www.acmicpc.net/problem/10870(Bronze2)
+https://www.acmicpc.net/problem/10971(Silver2)
+https://www.acmicpc.net/problem/10974(Silver3)
+https://www.acmicpc.net/problem/14620(Silver2)
+https://www.acmicpc.net/problem/15649(Silver3)
+https://www.acmicpc.net/problem/15663(Silver2)

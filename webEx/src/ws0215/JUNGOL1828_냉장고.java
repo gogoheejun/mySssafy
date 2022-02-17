@@ -45,7 +45,6 @@ public class JUNGOL1828_냉장고 {
 				maxNum = temps[i+1].max;
 			}
 		}
-
 		System.out.println(ans);
 	}
 

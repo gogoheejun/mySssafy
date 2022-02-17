@@ -20,5 +20,4 @@ public class SquareNumberDivideTest {
 		long y = exp(x, n/2);
 		return (n%2==0)? y*y:y*y*x;
 	}
-
 }

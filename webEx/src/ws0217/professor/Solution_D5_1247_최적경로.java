@@ -1,6 +1,6 @@
-package ws0217;
+package ws0217.professor;
 
-//1247-[S/W 문제해결 응용] 3일차 - 최적 경로
+
 /*
 [입력]
 5
@@ -49,12 +49,12 @@ public class Solution_D5_1247_최적경로 {
 					map[i][j] = dist;
 				}
 			}
-			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < N; j++) {
-					System.out.printf("%-7d",map[i][j]);
-				}
-				System.out.println();
-			}
+//			for (int i = 0; i < N; i++) {
+//				for (int j = 0; j < N; j++) {
+//					System.out.printf("%-7d",map[i][j]);
+//				}
+//				System.out.println();
+//			}
 
 			shortestRoute = Integer.MAX_VALUE;
 			visited[0] = true;

@@ -3,20 +3,21 @@ package 순열조합문제들;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class BOJ15650 {
+public class BOJ15651 {
 
 	static int N, R;
 	static int[] numbers;
+	static boolean[] selected[];
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
 		N = sc.nextInt();
 		R = sc.nextInt();
 		numbers = new int[R];
-		combi(0,1);
+		permu(0);
 	}
 	
-	static void combi(int cnt, int start) {
+	static void permu(int cnt) {
 		if(cnt == R) {
 			StringBuilder sb = new StringBuilder();
 			for(int i=0; i<R; i++) {
@@ -27,9 +28,9 @@ public class BOJ15650 {
 			return;
 		}
 		
-		for(int i=start; i<N+1; i++) {
-			numbers[cnt] = i;
-			combi(cnt+1, i+1);
+		for(int i=1; i<N+1; i++) {
+			numbers[cnt] = i; 
+			permu(cnt+1);
 		}
 	}
 

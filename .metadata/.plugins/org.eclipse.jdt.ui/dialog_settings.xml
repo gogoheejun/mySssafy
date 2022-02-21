@@ -84,4 +84,10 @@
 		<item key="DIALOG_HEIGHT" value="867"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 	</section>
+	<section name="JavaEditorCodeMiningConfigurationBlock">
+		<item key="expanded0" value="true"/>
+	</section>
+	<section name="SelfEncapsulateFieldWizard">
+		<item key="GenerateJavadoc" value="false"/>
+	</section>
 </section>

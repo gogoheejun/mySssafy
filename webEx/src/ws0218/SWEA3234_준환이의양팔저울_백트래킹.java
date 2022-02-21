@@ -46,7 +46,6 @@ public class SWEA3234_준환이의양팔저울_백트래킹 {
 
 	static int ans=0;
 	static void pick(int cnt, int left, int right) {
-//		if(left < right) return;
 
 		if(cnt == N) {
 			ans++;

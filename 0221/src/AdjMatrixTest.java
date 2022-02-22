@@ -81,7 +81,8 @@ public class AdjMatrixTest {
 		
 		//current 정점의 인접정점 처리(단, 방문하지 않은 정점만)
 		for(int j=0; j<N; j++) {
-			if(!visited[j] && adjMatrix[current][j]!=0) {
+			if(!visited[j] 
+					&& adjMatrix[current][j]!=0) {
 				dfs(adjMatrix, visited, j);
 			}
 		}

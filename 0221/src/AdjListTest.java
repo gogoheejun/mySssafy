@@ -56,7 +56,7 @@ public class AdjListTest {
 		for(int i=0; i<C; i++) {
 			int from = sc.nextInt();
 			int to = sc.nextInt();
-			//맨 앞에다가 추가하는 거임. 이게 더 쉽대.
+			//맨 앞에다가 추가하는 거임. 현재 무향 그래프니까 to에도 넣어줌.
 			adjList[from] = new Node(to,adjList[from]);
 			adjList[to] = new Node(from,adjList[to]);
 		}
@@ -65,8 +65,8 @@ public class AdjListTest {
 			System.out.println(head);
 		}
 		System.out.println("-------------------");
-//		bfs(adjList,0);
-		dfs(adjList, new boolean[N],0);
+		bfs(adjList,0);
+//		dfs(adjList, new boolean[N],0);
 	}
 	
 	public static void bfs(Node[] adjList, int start) {

@@ -1,4 +1,4 @@
-package 보충수업;
+package 보충수업.일주차;
 
 import java.util.Scanner;
 import java.util.Stack;

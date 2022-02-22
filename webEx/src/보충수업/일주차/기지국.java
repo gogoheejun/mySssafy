@@ -1,4 +1,4 @@
-package 보충수업;
+package 보충수업.일주차;
 //문제는 외부공개불가이므로 하드디스크에 있는 첨부파일 참고
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

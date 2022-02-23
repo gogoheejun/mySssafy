@@ -20,15 +20,15 @@ public class SWEA7465_창용마을무리의개수 {
 			int N = Integer.parseInt(st.nextToken());//마을 사람 수
 			int M = Integer.parseInt(st.nextToken());// 관계의 수
 			
+			//처음 정점들 만들기
 			makeSet(N);
-//			System.out.println("처음:"+ Arrays.toString(parents));
+			
 			for(int i=0; i<M; i++) {
 				st = new StringTokenizer(br.readLine());
 				int a = Integer.parseInt(st.nextToken());
 				int b = Integer.parseInt(st.nextToken());
 				
 				union(a,b);
-//				System.out.println(a+", "+b+" : "+Arrays.toString(parents));
 			}
 			
 			
@@ -37,12 +37,10 @@ public class SWEA7465_창용마을무리의개수 {
 			for(int i=0; i<N+1; i++) {
 				findSet(i);
 			}
-//			System.out.println(Arrays.toString(parents));
 			Set<Integer> set = new HashSet<Integer>();
 			for(int i=1; i<N+1; i++) {
 				set.add(parents[i]);
 			}
-//			System.out.println(set);
 			int ans = set.size();
 			
 			sb.append("#").append(tc).append(" ").append(ans).append("\n");

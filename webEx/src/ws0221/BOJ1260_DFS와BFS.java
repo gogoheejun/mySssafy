@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class BOJ1260 {
+public class BOJ1260_DFS와BFS {
 
 	static int N, M, V;
 	public static void main(String[] args) {

@@ -116,7 +116,8 @@ public class BOJ16236_아기상어_풀이 {
 			// 우선순위 큐가 비어있지 않으면 먹는다
 			if(!fishes.isEmpty()) {
 				Fish fish = fishes.poll();
-				
+				System.out.println("상어이동장소: "+fish.x+", "+fish.y);
+
 				// 먹은 횟수와 상어의 크기가 같으면 크기를 1 증가
 				if(++cnt == shark_size) {
 					shark_size++;
@@ -124,7 +125,7 @@ public class BOJ16236_아기상어_풀이 {
 				}
 				
 				//크기가 커지면서 먹을수 있는 먹이가 확장되고 위치를 이동했으니 남은 큐비우고 현재위치 추가
-				shark_pos.clear();
+//				shark_pos.clear();
 				shark_pos.offer(new Fish(fish.x, fish.y, 0));
 				
 			

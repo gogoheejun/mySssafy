@@ -20,6 +20,7 @@ public class BOJ10026_적록색약 {
 			mat[i] = sc.next().toCharArray();
 		}
 		
+		//정상
 		int cntNotBlind = 0;
 		check = new boolean[N][N];
 		for(int i=0; i<N; i++) {
@@ -31,7 +32,7 @@ public class BOJ10026_적록색약 {
 			}
 		}
 		
-		
+		//색약
 		int cntBlind = 0;
 		check = new boolean[N][N];
 		for(int i=0; i<N; i++) {
@@ -64,7 +65,7 @@ public class BOJ10026_적록색약 {
 						check[nr][nc] = true;
 						Point nextPoint = new Point(nr,nc);
 						qu.offer(nextPoint);
-					}else if(isBlind) {
+					}else if(isBlind) {//색약인경우
 						if(mat[nr][nc] == 'R' && mat[current.r][current.c]=='G'
 							|| mat[nr][nc] == 'G' && mat[current.r][current.c]=='R') {
 							check[nr][nc] = true;

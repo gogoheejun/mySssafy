@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 /*
  * 
@@ -39,71 +43,69 @@ output==>10
 output==>175
  */
 public class 크루스칼 {
-	static int N;
-	static Edge[] edgeArr;
+	static int N, E, weight;
 	static int[] parents;
 	
-	static class Edge{
-		private int from;
-		private int to;
-		private int weight;
-		
+	static class Edge implements Comparable<Edge>{
+		int from;
+		int to;
+		int weight;
 		public Edge(int from, int to, int weight) {
 			super();
 			this.from = from;
 			this.to = to;
 			this.weight = weight;
 		}
+		@Override
+		public int compareTo(Edge o) {
+			return this.weight - o.weight;
+		}
 	}
 	
-	static int searchRoot(int a) {
+	static int findSet(int a) {
 		if(a == parents[a]) return a;
-		return parents[a] = searchRoot(parents[a]);
+		return parents[a] = findSet(parents[a]);
 	}
 	
 	static boolean union(int a, int b) {
-		int rootA = searchRoot(a);
-		int rootB = searchRoot(b);
+		int rootA = findSet(a);
+		int rootB = findSet(b);
 		if(rootA == rootB) return false;
-		
 		parents[rootB] = rootA;
 		return true;
 	}
 	
 	static void makeSet() {
-		parents = new int[N];
 		for(int i=0; i<N; i++) {
 			parents[i] = i;
 		}
 	}
 	
-	public static void main(String[] args) throws IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(in.readLine(), " ");
-		N = Integer.parseInt(st.nextToken());
-		int E = Integer.parseInt(st.nextToken());//간선개수
-		edgeArr = new Edge[E];
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		N = sc.nextInt();
+		E = sc.nextInt();
 		
+		Edge[] edgeList = new Edge[E];
 		for(int i=0; i<E; i++) {
-			st = new StringTokenizer(in.readLine(), " ");
-			int from = Integer.parseInt(st.nextToken());
-			int to = Integer.parseInt(st.nextToken());
-			int weight = Integer.parseInt(st.nextToken());
-			
-			edgeArr[i] = new Edge(from, to, weight);
+			int from = sc.nextInt();
+			int to = sc.nextInt();
+			int weight = sc.nextInt();
+			edgeList[0] = new Edge(from, to, weight);
 		}
 		
-		Arrays.sort(edgeArr);
+		Arrays.sort(edgeList);
 		makeSet();
 		
-		int result = 0, cnt=0;
-		for(Edge edge: edgeArr) {
+		int cnt = 0;
+		int result = 0;
+		for(Edge edge : edgeList) {
 			if(union(edge.from, edge.to)) {
-				result += edge.weight;
-				if(++cnt == N-1) break;
+				cnt++;
+				result+=edge.weight;
+				if(cnt== N-1) break;
 			}
 		}
-		System.out.println(result);
 	}
 }
 

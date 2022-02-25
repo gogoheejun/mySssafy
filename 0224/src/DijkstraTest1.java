@@ -48,7 +48,7 @@ public class DijkstraTest1 {
 			}
 		}
 		
-		System.out.println(distance);
+		System.out.println(Arrays.toString(distance));
 		
 	}
 }

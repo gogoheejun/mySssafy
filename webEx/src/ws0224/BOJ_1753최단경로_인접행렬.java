@@ -37,7 +37,7 @@ import java.util.Scanner;
 3
 16
  */
-public class BOJ_1753최단경로 {
+public class BOJ_1753최단경로_인접행렬 {
 
 	static int V, E, start;
 	static int[][] mat;

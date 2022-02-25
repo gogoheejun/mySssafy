@@ -3,42 +3,8 @@ package ws0224;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Scanner;
-/*
-[입력]
-5 7
-1
-1 2 3
-1 3 6
-1 4 7
-2 3 1
-3 4 4
-3 5 2
-4 5 3
 
-[출력]
-0
-3
-4
-7
-6
-
-[입력]
-5 5
-1
-1 2 10
-1 3 5
-1 4 3
-2 4 2
-2 5 6
-
-[출력]
-0
-10
-5
-3
-16
- */
-public class BOJ_1753최단경로2_인접리스트 {
+public class BOJ_1753최단경로_인접리스트 {
 //시간초과뜸...
 	static int V, E, start;
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Insert title here</title>
+  <style>
+    .test1{
+      background-color: aqua;
+      color: red;
+      font-weight: bold;
+    }
+    .test2{
+      background-color: beige;
+      color: brown;
+      font-weight: bold;
+    }
+  </style>
+  <script type="text/javascript">
+    window.onload = function () {
+      var profile = document.createElement('img');
+      profile.src = 'profile.png';
+      profile.width = 150;
+      profile.height = 200;
+
+      document.body.appendChild(profile);
+      document.body.append(document.createElement("h2").appendChild(document.createTextNode("dynamic text")));
+      document.getElementById("divid").appendChild(document.createTextNode("dynamic text2"));
+
+      // document.getElementsByTagName("h3")[0].style.background = "cyan";
+      // document.getElementsByTagName("h3")[0].setAttribute("style","background: cyan");
+      // document.getElementsByTagName("h3")[0].setAttribute("style","color: red; background: cyan; font-weight:bold");
+      // document.getElementsByTagName("h3")[0].setAttribute("class","test1");
+      let flag = true;
+      function changeColor(){
+        let name = document.getElementById("btn").parentElement.getAttribute("my-data");
+
+        if(flag){
+          document.getElementsByTagName("h3")[0].setAttribute("class","test1");
+          flag = !flag;
+        }else{
+          document.getElementsByTagName("h3")[0].setAttribute("class","test2");
+          flag = !flag;
+        }
+      }
+    };
+  </script>
+</head>
+
+<body>
+  <h1>h11111</h1>
+  <h2>h22222</h2>
+  <div id="divid"></div>
+  <h3>h33333</h3>
+  <div my-data="내이름">
+    <button id="btn" onclick="changeColor()">색변경</button>
+  </div>
+
+</body>
+
+</html>

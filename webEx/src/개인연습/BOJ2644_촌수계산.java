@@ -50,5 +50,4 @@ public class BOJ2644_촌수계산 {
 			}
 		}
 	}
-
 }

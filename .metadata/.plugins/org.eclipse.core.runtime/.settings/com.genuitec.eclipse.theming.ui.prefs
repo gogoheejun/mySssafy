@@ -1,9 +1,11 @@
 applyBackground=false
 approved.defs.file.last.changed.time=1624986146000
+codetogether.announce.displayed=true
 configurationInstallLocation=/C\:/SSAFY/eclipse/
+ct.reengagement.display.after=1657371116226
 eclipse.preferences.version=1
 iconcolormode=primary
-last.download.attempt.time=1646575987481
-lastConfiguration=1646659172975
+last.download.attempt.time=1646799393530
+lastConfiguration=1646799380552
 newinstall=true
 workbench.theme=Dark Gray

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+function helloToServer(){
+	var xhr=new XMLHttpRequest();
+	
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+			document.getElementById('display').innerHTML=xhr.responseText;
+		}	
+	}
+
+	var param="irum=" + document.f.irum.value;
+	xhr.open("GET","hello.jsp?" + encodeURI(param), true); 
+	xhr.send(null);   
+	//POST 방식일땐 아래처럼 해야함.
+	//xhr.open("POST","hello.jsp",true); 	
+	//xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+	//xhr.send(param);   
+}
+</script>
+</head>
+<body>
+<form name="f">
+	이름: <input type="text" name="irum">
+	<input type="button" value="입력" onclick="helloToServer()">
+</form>
+<div id="display"></div>
+</body>
+</html>
+
+<!-- ---------------------------------------------------------------------- -->
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+var httpRequest=null;
+
+function getXMLHttpRequest(){  //서버와 통신할 객체 생성
+	if(window.ActiveXObject){
+		try{
+			return new ActiveXObject("Msxml2.XMLHTTP");
+			//웹 브라우저가 IE5.0, IE6.0인 경우 ActiveX객체를사용해서 통신 객체 생성
+		}catch(e1){
+			return null;
+		}
+	}else if(window.XMLHttpRequest){
+		return new XMLHttpRequest();
+		//웹 브라우저가 IE7.0, 파이어폭스,사파리,오페라인 경우 자바스크립트의 내장 객체를 사용해서 객체생성
+	}else{
+		return null;
+	}
+}
+//-----------------------------------------------------------
+function viewMessage(){
+	if(httpRequest.readyState==4){    // 전송완료
+		if(httpRequest.status==200){  // OK-요청성공
+			//alert("응답:" + httpRequest.responseText);
+			document.getElementById('display').innerHTML=httpRequest.responseText;
+		}else{
+			alert("실패:" + httpRequest.status);
+		}
+	}
+}
+//-----------------------------------------------------------
+function helloToServer(){
+	httpRequest=getXMLHttpRequest();            //통신객체 생성
+	httpRequest.onreadystatechange=viewMessage; //처리할 함수
+
+	var param="irum=" + document.f.irum.value;
+	httpRequest.open("GET","hello.jsp?" + encodeURI(param), true); //hello.jsp?irum=kim
+	httpRequest.send(null);           
+}
+</script>
+</head>
+<body>
+<form name="f">
+	이름: <input type="text" name="irum">
+	<input type="button" value="입력" onclick="helloToServer()">
+</form>
+<div id="display"></div>
+</body>
+</html>
+
+
+
+
+
+
+
+ -->

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+var httpRequest=null;
+
+function getXMLHttpRequest(){  //서버와 통신할 객체 생성
+	if(window.ActiveXObject){
+		try{
+			return new ActiveXObject("Msxml2.XMLHTTP");
+			//웹 브라우저가 IE5.0, IE6.0인 경우 ActiveX객체를사용해서 통신 객체 생성
+		}catch(e1){
+			return null;
+		}
+	}else if(window.XMLHttpRequest){
+		return new XMLHttpRequest();
+		//웹 브라우저가 IE7.0, 파이어폭스,사파리,오페라인 경우 자바스크립트의 내장 객체를 사용해서 객체생성
+	}else{
+		return null;
+	}
+}
+//-----------------------------------------------------------
+function viewMessage(){
+	if(httpRequest.readyState==4){    // 전송완료
+		if(httpRequest.status==200){  // OK-요청성공
+			alert("응답:" + httpRequest.status);
+		}else{
+			alert("실패:" + httpRequest.status);
+		}
+	}
+}
+//-----------------------------------------------------------
+function load(url){
+	httpRequest=getXMLHttpRequest();            //통신객체 생성
+	httpRequest.onreadystatechange=viewMessage; //처리할 함수
+	httpRequest.open("GET", url, true); //true: 동기, false: 비동기
+	httpRequest.send(null);
+}
+</script>
+</head>
+<body>
+	<input type="button" value="simple.html" onclick="load(value)">
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

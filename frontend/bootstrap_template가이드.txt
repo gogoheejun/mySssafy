@@ -1,0 +1,15 @@
+1. 부트스트랩이란?
+- Bootstrap은 반응형 디자인으로 쉬운 웹 개발 환경은 제공한다
+- HTML과 CSS의 기본 지식만 가지고 있으면 누구나 사용가능하다
+
+2. 다운로드: http://getbootstrap.com
+3. Bootstrap 4는 모바일 장치에 반응하도록 설게되어 있다
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+4. 부트스트랩 템플릿사이트
+https://www.bootstrapzero.com/
+https://startbootstrap.com/themes/
+https://templatemag.com/bootstrap-templates/
+https://themehunt.com/
+https://bootstrapmade.com/
+https://bootstrapmade.com/bootstrap-4-templates/

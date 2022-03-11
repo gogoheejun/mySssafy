@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		table {
+			width: 1200px;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#listBtn').click(function () {
+				var ServiceKey = '============== Servicekey 넣어 주세요 ==============';
+				var pageNo = '1';
+				var numOfRows = '30';
+				// server에서 넘어온 data
+				$.ajax({
+					url: 'http://apis.data.go.kr/B551182/rprtHospService/getRprtHospService',
+					type: 'GET',
+					data: {
+						"serviceKey": ServiceKey,
+						"pageNo": pageNo,
+						"numOfRows": numOfRows,
+					},
+					dataType: 'xml',
+					success: function (response) {
+						console.log(response);
+						makeList(response);
+					},
+					error: function (xhr, status, msg) {
+						console.log('상태값 : ' + status + ' Http에러메시지 : ' + msg);
+					},
+				});
+			});
+
+			function makeList(data) {
+				let hospitalList = ``;
+				$(data)
+					.find('item')
+					.each(function () {
+						hospitalList += `
+						<tr>
+							<td>${$(this).find('yadmNm').text()}</td>
+							<td>${$(this).find('telno').text()}</td>
+							<td>${$(this).find('addr').text()}</td>
+							<td>${$(this).find('pcrPsblYn').text()}</td>
+							<td>${$(this).find('YPosWgs84').text()}</td>
+							<td>${$(this).find('XPosWgs84').text()}</td>
+						</tr>`;
+
+					});
+				//alert(studentlist);
+				$('#hospitalInfo').empty().append(hospitalList);
+				$('tr:first').css('background', 'darkgray').css('color', 'white');
+				$('tr:even').css('background', 'lightgray');
+			}
+		});
+	</script>
+</head>
+
+<body>
+	<h3>건강보험심사평가원_호흡기 진료 지정 의료기관 정보서비스</h3>
+	<div><button id="listBtn">의료기관 정보 얻기</button></div>
+	<table>
+		<tr>
+			<th>요양기관명</th>
+			<th>전화번호</th>
+			<th>주소</th>
+			<th>PCR가능여부</th>
+			<th>위도</th>
+			<th>경도</th>
+		</tr>
+		<tbody id="hospitalInfo"></tbody>
+	</table>
+</body>
+
+</html>

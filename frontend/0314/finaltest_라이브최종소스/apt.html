@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SSAFY</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+	<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- services와 clusterer, drawing 라이브러리 불러오기 -->
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=41ebfc16c8703fbc488debc09e56e316&libraries=services,clusterer,drawing"></script>
+	<!-- 	
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=41ebfc16c8703fbc488debc09e56e316"></script>
+
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=41ebfc16c8703fbc488debc09e56e316&libraries=services"></script> -->
+	<script type="text/javascript">
+		// https://juso.dev/docs/reg-code-api/
+		$(function () {
+			for (let i = 2000; i < 2023; i++) {
+				$("#year").append(`<option value="${i}">${i}년</option>`);
+			}
+
+			for (let i = 1; i < 13; i++) {
+				$("#month").append(`<option value="${i < 10 ? "0" + i : i}">${i}월</option>`);
+			}
+
+			sendRequest("sido", "*00000000");
+		});
+
+		$(document).on("change", "#sido", function () {
+			regcode = $(this).val().substr(0, 2) + "*00000";
+			console.log("sido select regcode : " + regcode);
+			$("#gugun").empty();
+			$("#dong").empty().append("<option>동선택</option>");
+			sendRequest("gugun", regcode);
+		});
+
+		$(document).on("change", "#gugun", function () {
+			regcode = $(this).val().substr(0, 5) + "*";
+			console.log("gugun select regcode : " + regcode);
+			sendRequest("dong", regcode);
+		});
+
+		function sendRequest(selid, regcode) {
+			console.log("regcode : " + regcode);
+			$.ajax({
+				url: "https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes",
+				type: "GET",
+				data: {
+					regcode_pattern: regcode,
+					is_ignore_zero: true,
+				},
+				dataType: "json",
+				success: function (response) {
+					console.log(response);
+					addOption(selid, response);
+				},
+				error: function (xhr, status, msg) {
+					console.log("상태값 : " + status + " Http에러메시지 : " + msg);
+				},
+			});
+		}
+
+		function addOption(selid, data) {
+			let code = ``;
+			let initOption = ``;
+			switch (selid) {
+				case "sido":
+					initOption = `<option>시도선택</option>`;
+					$("#sido").empty().append(initOption);
+					$.each(data.regcodes, function (i, regcode) {
+						code += `
+              <option value="${regcode.code}">${regcode.name.split(" ")[0]}</option>
+              `;
+					});
+					break;
+				case "gugun":
+					initOption = `<option>구군선택</option>`;
+					$("#gugun").empty().append(initOption);
+					console.log(data.regcodes);
+					for (let i = 0; i < data.regcodes.length; i++) {
+						if (i != data.regcodes.length - 1) {
+							if (
+								data.regcodes[i].name.split(" ")[1] == data.regcodes[i + 1].name.split(" ")[1] &&
+								data.regcodes[i].name.split(" ").length !=
+								data.regcodes[i + 1].name.split(" ").length
+							) {
+								data.regcodes.splice(i, 1);
+								i--;
+							}
+						}
+					}
+					console.log(data.regcodes);
+					let name = "";
+					$.each(data.regcodes, function (i, regcode) {
+						if (regcode.name.split(" ").length == 2) name = regcode.name.split(" ")[1];
+						else name = regcode.name.split(" ")[1] + " " + regcode.name.split(" ")[2];
+						code += `
+              <option value="${regcode.code}">${name}</option>
+              `;
+					});
+					break;
+				case "dong":
+					initOption = `<option>동선택</option>`;
+					$("#dong").empty().append(initOption);
+					let idx = 2;
+					$.each(data.regcodes, function (i, regcode) {
+						if (data.regcodes[i].name.split(" ").length != 3) idx = 3;
+						code += `
+              <option value="${regcode.code}">${regcode.name.split(" ")[idx]}</option>
+              `;
+					});
+					break;
+			}
+			$("#" + selid).append(code);
+		}
+
+
+
+		//===================지도관련========================
+		var map
+		$(document).ready(function () {
+			//  카카오 지도 설정.
+			var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+			var options = {
+				//지도를 생성할 때 필요한 기본 옵션
+				center: new kakao.maps.LatLng(37.5012743, 127.039585), //지도의 중심좌표. (멀티캠퍼스)
+				level: 3, //지도의 레벨(확대, 축소 정도)
+			};
+
+			map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+			// 마커가 표시될 위치입니다
+			var markerPosition = new kakao.maps.LatLng(37.5012743, 127.039585);
+
+			// 마커를 생성합니다
+			var marker = new kakao.maps.Marker({
+				position: markerPosition,
+			});
+
+			// 마커가 지도 위에 표시되도록 설정합니다
+			marker.setMap(map);
+
+			var iwContent =
+				'<div style="padding:5px;">멀티캠퍼스 <br><a href="https://map.kakao.com/link/map/멀티캠퍼스,37.5012743, 127.039585" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/멀티캠퍼스,37.5012743, 127.039585" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+				iwPosition = new kakao.maps.LatLng(33.450701, 126.570667); //인포윈도우 표시 위치입니다
+
+			// 인포윈도우를 생성합니다
+			var infowindow = new kakao.maps.InfoWindow({
+				position: iwPosition,
+				content: iwContent,
+			});
+
+			// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+			infowindow.open(map, marker);
+
+			// HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+			if (navigator.geolocation) {
+				// GeoLocation을 이용해서 접속 위치를 얻어옵니다
+				navigator.geolocation.getCurrentPosition(function (position) {
+					var lat = position.coords.latitude, // 위도
+						lon = position.coords.longitude; // 경도
+
+					var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+						message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+
+					// 마커와 인포윈도우를 표시합니다
+					displayMarker(locPosition, message);
+				});
+			} else {
+				// HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+
+				var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
+					message = "geolocation을 사용할수 없어요..";
+
+				displayMarker(locPosition, message);
+			}
+			// 지도에 마커와 인포윈도우를 표시하는 함수입니다
+			function displayMarker(locPosition, message) {
+				// 마커를 생성합니다
+				var marker = new kakao.maps.Marker({
+					map: map,
+					position: locPosition,
+				});
+
+				var iwContent = message, // 인포윈도우에 표시할 내용
+					iwRemoveable = true;
+
+				// 인포윈도우를 생성합니다
+				var infowindow = new kakao.maps.InfoWindow({
+					content: iwContent,
+					removable: iwRemoveable,
+				});
+
+				// 인포윈도우를 마커위에 표시합니다
+				infowindow.open(map, marker);
+
+				// 지도 중심좌표를 접속위치로 변경합니다
+				map.setCenter(locPosition);
+			}
+
+
+			//======================버튼클릭 후 동작
+			$(document).on("click", "#btn-list", function () {
+				let gugun = $("#gugun").val().substr(0, 5);
+				let ym = "" + $("#year").val() + $("#month").val();
+				console.log(gugun + " " + ym);
+				let requestData = {
+					serviceKey:
+						"ZkmHEAVaoQ0yFwBbRFQSMJkOhXX/MQzcTpYDB0Q513dcVb3Vuz6vCU7QSEPdyYs0A3aOUSDG2WuzVo+QDF4beQ==",
+					pageNo: "1",
+					numOfRows: "30",
+					LAWD_CD: gugun,
+					DEAL_YMD: ym,
+				};
+				$.ajax({
+					url: "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev",
+					type: "GET",
+					data: requestData,
+					dataType: "xml",
+					success: function (response) {
+						console.log(response);
+						makeList(response);
+						drawMarkers(response);
+					},
+					error: function () { },
+				});
+			});
+
+			function drawMarkers(response) {
+				$(response).find("item").each(function () {
+					// var sidoName = $("select[name=sido] option:selected").text();
+					// var gugunName = $("select[name=gugun] option:selected").text();
+					// var dongName = $("select[name=dong] option:selected").text();
+					//법정동 + 지번
+					var gugun = $("select[name=gugun] option:selected").text()
+					var dong = $(this).find("법정동").text();
+					var jibun = $(this).find("지번").text();
+
+					var address = gugun + dong + " " + jibun;
+					console.log("주소찾기:" + address);
+					getGeoLocation(address,$(this));
+
+				});
+
+			}
+
+			//주소 -> 좌표변환 후 이동
+			function getGeoLocation(koreanAddress, xmlData) {
+				var coords;
+				// 주소-좌표 변환 객체를 생성합니다
+				var geocoder = new kakao.maps.services.Geocoder();
+				// 주소로 좌표를 검색합니다
+				geocoder.addressSearch(koreanAddress, function (result, status) {
+					// 정상적으로 검색이 완료됐으면 
+					if (status === kakao.maps.services.Status.OK) {
+						var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+						// 마커 이미지의 이미지 크기 입니다
+						var imageSize = new kakao.maps.Size(24, 35);
+						// 마커 이미지를 생성합니다    
+						var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+
+						coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+						
+
+						console.log("엥:"+coords)
+						// 결과값으로 받은 위치를 마커로 표시합니다
+						var marker = new kakao.maps.Marker({
+								map: map,
+								position: coords,
+								image: markerImage
+						});
+
+						var aptName = $(xmlData).find("아파트").text();
+						// 인포윈도우로 장소에 대한 설명을 표시합니다
+						var infowindow = new kakao.maps.InfoWindow({
+								content: `<div style="width:150px;text-align:center;padding:6px 0;">${aptName}</div>`
+						});
+						infowindow.open(map, marker);
+
+						// // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+						map.setCenter(coords);
+					}
+				});
+			}
+
+			function makeList(data) {
+				let aptListInfo = ``;
+				$(data)
+					.find("item")
+					.each(function () {
+						aptListInfo += `
+                <tr>
+                    <td>${$(this).find("아파트").text()}</td>
+                    <td>${$(this).find("층").text()}</td>
+                    <td>${$(this).find("전용면적").text()}</td>
+                    <td>${$(this).find("법정동").text()}</td>
+                    <td>${$(this).find("거래금액").text()}</td>
+                </tr>
+                `;
+					});
+				$("#aptlist").empty().append(aptListInfo);
+				$("tr:first").css("background", "black").css("color", "white");
+				$("tr:odd").css("background", "lightgray");
+			}
+
+		});
+
+	</script>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-sm bg-light navbar-dark fixed-top shadow">
+		<div class="container">
+			<a class="navbar-brand" href="#">
+				<img src="./img/ssafy_logo.png" alt="Logo">
+			</a>
+			<!-- Toggler/collapsibe Button -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<!-- Navbar links -->
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link text-secondary" href="#">공지사항</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-secondary" href="./apt.html">아파트정보</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-secondary" href="./hospital.html">코로나 의료기관 정보</a>
+					</li>
+				</ul>
+			</div>
+			<div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link text-secondary" href="#" data-toggle="modal" data-target="#myModal">로그인</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-secondary" href="#">회원가입</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div style="height: 130px;"></div>
+		<div class="row col-sm-12 justify-content-center">
+			<div class="form-group">
+				<select class="form-control bg-dark text-light" id="sido" name="sido">
+				</select>
+			</div>
+			<div class="form-group">
+				<select class="form-control bg-dark text-light" id="gugun" name="gugun">
+					<option value="">구군선택</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<select class="form-control bg-dark text-light" id="dong" name="dong">
+					<option value="">동선택</option>
+				</select>
+			</div>
+		</div>
+		<div class="alert alert-success">
+			<strong>아파트</strong> 매매정보
+		</div>
+		<div class="row col-sm-12 justify-content-end">
+			<div class="form-group">
+				<select class="form-control" id="year"></select>
+			</div>
+			<div class="form-group ml-2">
+				<select class="form-control" id="month"></select>
+			</div>
+			<div class="form-group ml-2">
+				<button type="button" id="btn-list" class="btn btn-outline-info">아파트매매 상세정보</button>
+			</div>
+		</div>
+
+		<div id="map" style="width: 100%; height: 500px">지도자리</div>
+
+		<div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>아파트</th>
+						<th>층</th>
+						<th>면적</th>
+						<th>법정동</th>
+						<th>거래금액</th>
+					</tr>
+				</thead>
+				<tbody id="aptlist"></tbody>
+			</table>
+		</div>
+	</div>
+	<div class="container bg-light">
+		<ul class="nav justify-content-end">
+			<li class="nav-item">
+				<a class="nav-link text-dark" href="#">채용공고</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-dark" href="#">오시는길</a>
+			</li>
+		</ul>
+	</div>
+
+	<!-- The Modal -->
+	<div class="modal" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">로그인</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form action="">
+						<div class="form-group">
+							<label for="email">Email address:</label>
+							<input type="email" class="form-control" placeholder="Enter email" id="email">
+						</div>
+						<div class="form-group">
+							<label for="pwd">Password:</label>
+							<input type="password" class="form-control" placeholder="Enter password" id="pwd">
+						</div>
+						<div class="form-group form-check">
+							<label class="form-check-label">
+								<input class="form-check-input" type="checkbox"> Remember me
+							</label>
+						</div>
+						<button type="submit" class="btn btn-primary">로그인</button>
+					</form>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

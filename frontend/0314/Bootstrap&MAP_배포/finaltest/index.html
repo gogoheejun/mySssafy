@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-sm bg-light navbar-dark fixed-top shadow">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="./img/ssafy_logo.png" alt="Logo">
+      </a>
+
+      <!-- Toggler/collapsibe Button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar links -->
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="#">공지사항</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="./apt.html">아파트매매정보</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="./hospital.html">의료정보</a>
+          </li>
+        </ul>
+      </div>
+      <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="#">회원가입</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="#" data-toggle="modal" data-target="#loginModal">로그인</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Header End -->
+
+  <!-- 중앙 content start -->
+  <div class="container">
+    <div style="height: 130px">aaa</div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div>
+          <img src="./img/profile.png" class="rounded img-thumbnail" alt="profile">
+        </div>
+        <div class="mt-2">
+          <button type="button" class="btn btn-outline-primary btn-block">투표만들기</button>
+        </div>
+        <div class="border border-dark mt-2">
+          <div class="text-center text-danger font-weight-bold">진행중인 투표가 없습니다.</div>
+        </div>
+      </div>
+      <div class="col-sm-9 ">
+        <div class="jumbotron">
+          <h1>광고주 모심!</h1>
+          <p>확실하게 해드림!</p>
+        </div>
+        <div class="font-weight-bold">프로그래밍언어</div>
+        <div class="row mt-2">
+          <div class="col">
+            <img src="./img/book.png" class="rounded img-thumbnail" alt="profile">
+          </div>
+          <div class="col">
+            <img src="./img/book.png" class="rounded img-thumbnail" alt="profile">
+          </div>
+          <div class="col">
+            <img src="./img/book.png" class="rounded img-thumbnail" alt="profile">
+          </div>
+          <div class="col">
+            <img src="./img/book.png" class="rounded img-thumbnail" alt="profile">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col p-2">
+            <div class="font-weight-bold mt-2 mb-2">인기글</div>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Firstname</th>
+                  <th>Lastname</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>John</td>
+                  <td>Doe</td>
+                  <td>john@example.com</td>
+                </tr>
+                <tr>
+                  <td>Mary</td>
+                  <td>Moe</td>
+                  <td>mary@example.com</td>
+                </tr>
+                <tr>
+                  <td>July</td>
+                  <td>Dooley</td>
+                  <td>july@example.com</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="col p-2">
+            <div class="font-weight-bold mt-2 mb-2">최신글</div>
+            <table class="table table-dark table-striped">
+              <thead>
+                <tr>
+                  <th>Firstname</th>
+                  <th>Lastname</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>John</td>
+                  <td>Doe</td>
+                  <td>john@example.com</td>
+                </tr>
+                <tr>
+                  <td>Mary</td>
+                  <td>Moe</td>
+                  <td>mary@example.com</td>
+                </tr>
+                <tr>
+                  <td>July</td>
+                  <td>Dooley</td>
+                  <td>july@example.com</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 중앙 content end -->
+
+  <!-- 하단 footer start -->
+  <div class="container">
+    <ul class="nav justify-content-end">
+      <li class="nav-item">
+        <a class="nav-link text-dark" href="#">회원가입</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" href="#">로그인</a>
+      </li>
+    </ul>
+  </div>
+
+<!-- 모달창 -->
+  <!-- The Modal -->
+<div class="modal" id="loginModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">로그인</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form action="/action_page.php">
+          <div class="form-group">
+            <label for="email">Email address:</label>
+            <input type="email" class="form-control" placeholder="Enter email" id="email">
+          </div>
+          <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+          </div>
+          <div class="form-group form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox"> Remember me
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">로그인</button>
+          <button type="submit" class="btn btn-primary">회원가입</button>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

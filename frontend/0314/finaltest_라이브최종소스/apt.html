@@ -234,16 +234,13 @@
 
 			function drawMarkers(response) {
 				$(response).find("item").each(function () {
-					// var sidoName = $("select[name=sido] option:selected").text();
-					// var gugunName = $("select[name=gugun] option:selected").text();
-					// var dongName = $("select[name=dong] option:selected").text();
 					//법정동 + 지번
 					var gugun = $("select[name=gugun] option:selected").text()
 					var dong = $(this).find("법정동").text();
 					var jibun = $(this).find("지번").text();
 
 					var address = gugun + dong + " " + jibun;
-					console.log("주소찾기:" + address);
+					// console.log("주소찾기:" + address);
 					getGeoLocation(address,$(this));
 
 				});

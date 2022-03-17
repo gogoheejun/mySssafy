@@ -135,12 +135,12 @@ order by 2 asc;
 -- 1. MySQL구문
 -- 2. Ansi표준구문
 
-select * from employees;    --107 (부서없는 사원 1명)
-select * from departments;  --27
+select * from employees;    -- 107 (부서없는 사원 1명)
+select * from departments;  -- 27
 
 -- ex1) inner join : 같은것끼리만 조인
 -- 사원테이블과 부서테이블에서 부서가 같을경우 사원번호,부서번호,부서이름을 출력하시오  -- 106건
-
+use ssafydb;
 -- 방법1(MySQL구문)
 select employee_id, employees.department_id, department_name
 from employees, departments
@@ -166,18 +166,24 @@ select * from departments;
 select * from locations;
 
 -- 방법1(MySQL구문)
-
+select department_id, city
+from departments d, locations l
+where d.location_id = l.location_id;
 
 
 -- 방법2(Ansi표준구문)
-
+select department_id, city
+from departments d inner join locations l
+on d.location_id = l.location_id;
 
 
 -- ex3) outer join(left) : 왼쪽 테이블은 모두포함하여 조인
 -- 사원테이블과 부서테이블에서 부서번호가 같은 사원을 조인하시오 ==> 107건
 -- 조건 1) 사원이름, 부서ID, 부서이름을 출력하시오
 -- 조건 2) 사원테이블의 모든 사원을 포함하시오
-
+select last_name, department_id, department_name
+from employees left join departments 
+using(department_id);
 
 
 
@@ -185,7 +191,9 @@ select * from locations;
 -- 사원테이블과 부서테이블에서 부서번호가 같은 사원을 조인하시오 ===> 122건
 -- 조건 1) 사원이름, 부서ID, 부서이름을 출력하시오
 -- 조건 2) 부서테이블의 모든 부서를 포함하시오
-
+select last_name, department_id, department_name
+from employees right join departments 
+using(department_id);
 
 
 
@@ -194,11 +202,14 @@ select * from locations;
 -- ex5) departments 와  locations 자연조인의 비교(같은컬럼 : location_id)  ==> 27건
 --        두개의 테이블을 연결해서 부서위치(location_id), 도시(city), 부서이름(department_name)을 출력하시오
 -- 방법1(natural  join)
-
+select location_id, city, department_name
+from departments natural join locations; 
 
 
 -- 방법2(inner join)
-
+select location_id, city, department_name
+from departments inner join locations 
+using(location_id);
 
 
 -- ex6) inner join,  natural join : 두개의 컬럼이 일치하는경우
@@ -208,16 +219,22 @@ select * from locations;
 --        last_name     department_id   manager_id
 --        ------------------------------------------
 -- 방법1(MySQL구문)
-
+select last_name, e.department_id, e.manager_id
+from employees e, departments d
+where e.department_id=d.department_id and e.manager_id=d.manager_id; 
 
  
 
 -- 방법2(Ansi표준)
-
+select last_name, department_id, manager_id
+from employees join departments
+using(department_id,manager_id);
 
 
 -- 방법3(natural 조인이용)
-
+select last_name, department_id, manager_id
+from employees
+natural join departments;
 
 
 -- ex7) 내용은 같은데 컬럼명이 다른경우에 조인으로 연결하기
@@ -241,10 +258,14 @@ alter table locations2 rename column location_id to loc_id;
 -- location_id를 loc_id로 변경
 
 -- 방법1(MySQL구문)
-
+select department_id, department_name, city
+from departments d, locations2 l
+where d.location_id=l.loc_id;
 
 -- 방법2(Ansi표준)
-
+select department_id, department_name, city
+from departments d join locations2 l
+on d.location_id=l.loc_id;
 
 
 -- ex8) self 조인 : 자기자신의 테이블과 조인하는경우
@@ -253,8 +274,13 @@ alter table locations2 rename column location_id to loc_id;
 --        사원번호   사원이름      관리자
 --        ----------------------------------
 --        101      Kochhar      King   
+select e.employee_id as "사원번호", e.last_name as "사원이름", m.last_name as "관리자"
+from employees e, employees m
+where e.manager_id=m.employee_id;
 
-
+select e.employee_id as "사원번호", e.last_name as "사원이름", m.last_name as "관리자"
+from employees e left join employees m 
+on(e.manager_id = m.employee_id);
 
 -- ex9) cross join: 모든행에 대해 가능한 모든조합을 생성하는 조인
 select count(*) from countries;     -- 25
@@ -292,7 +318,10 @@ select * from salgrades;
 --            King	       24000	       A
 --            De Haan      17000	       B
 
-
+select last_name as "사원이름",salary as "급여", grade as "등급"
+from employees
+left join salgrades on(salary between losal and hisal)
+order by 2 desc;
 
 -- ex12) n(여러)개의 테이블은 조인
 -- 업무ID같은 사원들의 사원이름,업무내용,부서이름을 출력하시오  -- 107건
@@ -313,7 +342,11 @@ select * from salgrades;
 -- --------------------------------------------------
 -- Higgins	Accounting Manager	 Accounting
 -- Gietz		Public Accountant	 Accounting
-
+select last_name as "사원이름", department_name as "부서이름", job_title as "업무명"
+from employees
+left join departments using(department_id)
+left join jobs using(job_id)
+order by 2, 3;
 
 
 -- ----------------------------------------------------------------------------------
@@ -331,7 +364,11 @@ select * from salgrades;
 --  Ernst	   IT	  103
 --  Lorentz	   IT	  103
 --  Pataballa  IT	  103
-
+select e.last_name, d.department_name, e.manager_id
+from employees e join departments d
+using (department_id)
+where d.department_name = 'IT'
+order by last_name;
 
 
 -- ----------------------------------------------------------------------------------
@@ -348,6 +385,11 @@ select * from salgrades;
 select * from locations;
 select * from departments;
 
+select d.department_id, l.city
+from departments d join locations l
+using( location_id)
+where l.city = 'Seattle'
+order by d.department_id desc;
 
 
 -- ----------------------------------------------------------------------------------
@@ -357,7 +399,11 @@ select * from departments;
 --  조건2) 부서번호가 30번 또는 90번인 사원들만 출력하시오
 --  조건3) 사원이름별 오름차순 정렬하시오
 
-
+select last_name as "사원이름", department_id as "부서ID", department_name as "부서이름"
+from departments left join employees
+using(department_id)
+where department_id in(30,90)
+order by 1 asc;
 
 -- department_id=30 or department_id=90 또는 department_id in(30,90)
 -- ----------------------------------------------------------------------------------
@@ -379,6 +425,12 @@ select * from departments;
 -- department_id            department_id
 --                         location_id              loc_id            
 
+select last_name as "사원이름", city as "도시", department_name as "부서이름"
+from employees
+left join departments using(department_id)
+left join locations2 on(location_id=loc_id)
+where city in('Seattle', 'Oxford')
+order by city asc;
 
 
 -- ----------------------------------------------------------------------------------
@@ -388,6 +440,15 @@ select * from departments;
 --      조건2 : 도시주소에  Vi 또는 St가 포함되어 있는 데이터만 표시하시오
 --      조건3 : 나라명, 도시별로 오름차순정렬하시오
 --      조건4 : 모든사원을 포함한다
+
+select employee_id as "사원번호", last_name as "사원이름", department_name as "부서이름", 
+       city as "도시",street_address as "도시주소", country_name as "나라이름"
+from employees
+left join departments using(department_id)
+left join locations2 on(location_id=loc_id)
+left join countries using(country_id)
+where street_address like '%Vi%' or street_address like '%St%'
+order by 6, 4;
 
 -- ==========================================================================
 -- [SET operator]

@@ -1,0 +1,4 @@
+pdf 7페이지에
+Database이름은 ssafydb
+url은 mysql포트번호(원래3306인데 3307로 바꿈) jdbc:mysql://127.0.0.1:3307/ssafydb?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+password는 내가 설정한 비번으로해야함

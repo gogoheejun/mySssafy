@@ -42,7 +42,6 @@ INDEX VERSION 1.131+C:\SSAFY\00myssafy\.metadata\.plugins\org.eclipse.jdt.core
 4270229378.index
 31137816.index
 2653744674.index
-352784321.index
 2610772455.index
 770910800.index
 1255544617.index

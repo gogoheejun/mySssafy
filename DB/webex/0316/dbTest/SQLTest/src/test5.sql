@@ -18,6 +18,21 @@ show tables;
 -- ex1) 뷰-인라인
 -- 모든 사원의 평균 급여보다 적게 받는 사원들과 같은 부서에서 근무하는 
 -- 사원의 사번, 이름, 급여, 부서번호를 구하시오 --93건
+select e.employee_id, e.last_name, e.salary, d.department_id
+from (select distinct department_id
+	  from employees 
+	  where salary < (select avg(salary) from employees)) d
+join employees e on(d.department_id = e.department_id)
+order by e.employee_id;
+
+select employee_id, last_name, salary, department_id
+from employees
+where department_id in (select distinct(department_id)
+						from employees
+						where salary  <(select avg(salary) from employees))
+order by employee_id;
+
+
 
 
 
@@ -29,13 +44,36 @@ show tables;
 -- 조건3) 현재페이지가 3페이지라고 가정 (급여순 11등 ~ 15등까지 출력)
 
 -- 방법1) 인라인 뷰(inline View) – TopN질의
+set @pageno=3; -- 변수 설정
 
+select b.rn, b.employee_id, b.first_name, b.salary
+from(select @rownum := @rownum + 1 as rn, a.*
+	 from(select employee_id, first_name, salary
+		  from employees
+		  order by salary desc
+		  ) a, (select @rownum := 0) tmp
+	) b
+where b.rn > (@pageno * 5 - 5) and b.rn <= (@pageno * 5);
 
 
 -- 방법2) 인라인 뷰(inline View) – limt 활용 (MySQL)
+select employee_id, first_name, salary
+from employees
+order by salary desc limit 1, 5; 
 
-
-
+select a.employee_id, a.first_name, a.salary
+from (select @rownum := @rownum + 1 as rn, employee_id, first_name, salary
+	  from employees e, (select @rownum := 0) tmp
+	  order by salary desc
+	 )a limit 10, 5;
+     
+     
+select @rownum := @rownum + 1 as rn, employee_id, first_name, salary
+	  from employees e, (select @rownum := 0) tmp
+	  order by salary desc;
+select @rownum := @rownum + 1 as rn, employee_id, first_name, salary
+	  from employees e
+	  order by salary desc;
 
 -- ※ 스칼라 서브 쿼리 (Scalar Subquery)
 -- 1.SELECT 절에 있는 서브 쿼리이다.

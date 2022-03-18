@@ -1,0 +1,10 @@
+product   -- Java Project
+  src
+    com.ssafy.jdbctest
+        ProductDao.java     --interface
+        ProductDaoImpl.java
+        ProductDto.java
+        ProductMain.java
+    com.ssafy.jdbctest.util
+        DBClose.java
+        DBConnection.java    

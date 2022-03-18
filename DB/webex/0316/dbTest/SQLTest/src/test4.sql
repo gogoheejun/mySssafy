@@ -28,27 +28,69 @@ show tables;
 select department_id  from employees  where first_name='Neena';   -- -> 90
 select department_name  from departments  where department_id=90; -- -> Executive
 
+select department_name
+from departments
+where department_id = (select department_id 
+						from employees  
+						where first_name='Neena');
 
 
 -- ex2) Valli Pataballa의  업무명(job_title)을 알아내시오
 -- [참고] job_id(IT_PROG)
-
+select job_title
+from jobs
+where job_id=(select job_id
+			  from employees
+			  where first_name='Valli' and last_name='Pataballa');
 
 -- -----------------------------------------------------------------------------------
 -- ex3) Alexander Hunold의 근무지(city)를 알아내시오
 -- [참고] department_id(60) -> location_id(1400) -> city(Southlake)
+select locations.city
+from employees 
+join departments using (department_id)
+join locations using (location_id)
+where employees.first_name = 'alexander' && employees.last_name = 'hunold';
 
 
+select city
+from locations
+where location_id=(select location_id
+				   from departments
+				   where department_id=(select department_id
+								        from employees
+								        where first_name='Alexander' and last_name='Hunold'));
 
 
 -- ------------------------------------------------------------------------------------
 -- ex4) Steven King가 근무하는 나라(country_name)를 알아내시오
 -- [참고] 답 : United States of America
+select country_name
+from countries
+where country_id = (select country_id
+					from locations
+					where location_id = (select location_id
+										from departments
+										where department_id = (select department_id
+																from employees
+																where first_name='Steven' and last_name='King')));
 
 
 
 -- ------------------------------------------------------------------------------------
 -- ex5) Diana Lorentz가 근무하는 지역(region_name)을 알아내시오
+
+select region_name
+from regions
+where region_id = (select region_id
+					from countries
+					where country_id = (select country_id
+										from locations
+										where location_id = (select location_id
+															from departments
+															where department_id = (select department_id
+																					from employees
+																					where first_name='Diana' and last_name='Lorentz'))));
 
 
 -- ------------------------------------------------------------------------------------
@@ -57,7 +99,14 @@ select department_name  from departments  where department_id=90; -- -> Executiv
 -- first_name    department_id    salary
 -- ----------------------------------------
 -- Steven	     90	           24000
-
+select first_name,department_id, salary
+from employees
+where department_id = (select department_id
+                    from employees
+                    where first_name='Neena')
+and salary > (select salary
+              from employees
+              where first_name='Neena');
 
 -- ------------------------------------------------------------------------------------
 -- ex7) oliver와 같은 업무ID이면서 같은 부서가 아닌 사원의 
@@ -66,9 +115,17 @@ select department_name  from departments  where department_id=90; -- -> Executiv
 --       first_name        job_id        department_id
 --       ------------------------------------------------
 --       Kimberely	SA_REP	
-select * from employees;
-              
 
+select * from employees;
+
+select first_name, job_id, department_id
+from employees
+where job_id=(select job_id
+            from employees
+            where lower(first_name)='oliver')
+and ifnull(department_id,0) !=(select department_id
+								from employees
+								where lower(first_name)='oliver');
 
 
 
@@ -115,7 +172,13 @@ from employees;
 --     조건2) 급여평균은 천단위 절삭한다
 --     조건3) 타이틀은 업무명,급여합계로 한다
 --     조건4) 모든 사원을 포함한다
+select job_title as "업무명", truncate(avg(salary),-3) as "급여평균"
+from employees
+left join jobs using(job_id)
+group by job_title
+having avg(salary) < (select avg(salary) from employees);
 
+					  
 --    업무명                                             급여평균
 --    ---------------------------------
 --    Programmer	             5000
@@ -135,6 +198,14 @@ from employees;
 -- ST_MAN 사원의 급여 8000, 8200,7900,6500,5800 중 5800만 제외됨
 -- SA_REP의 최소급여는 6100이기 때문
 
+select last_name, job_id, salary
+from employees
+where job_id = 'ST_MAN'
+and salary > any(select distinct salary
+					from employees
+					where job_id = 'sa_rep'
+					order by 1);
+
 select distinct salary  from employees  where job_id='SA_REP' order by 1;
 select distinct salary  from employees  where job_id='ST_MAN';
 
@@ -151,7 +222,14 @@ select distinct salary  from employees  where job_id='ST_MAN';
 -- last_name   job_id   salary
 -- -----------------------------
 -- Mourgos	ST_MAN	5800
-
+select last_name, job_id, salary
+from employees
+where job_id = 'ST_MAN'
+and salary < all(select distinct salary
+					from employees
+					where job_id = 'sa_rep'
+					order by 1);
+                    
 
 
 -- --------------------------------------------------------------------------------------
@@ -168,8 +246,13 @@ select distinct salary  from employees  where job_id='ST_MAN';
 --      Abel         SA_REP        11,000달러
 --      Vishney      SA_REP        10,500달러
 
-
-
+select last_name, job_id, salary
+from employees
+where salary > all(select salary
+				from employees
+				where job_id = 'it_prog')
+and job_id in ('FI_ACCOUNT','SA_REP')
+order by salary desc;
 
 -- --------------------------------------------------------------------------------------
 --      9000  4800  4200 6000
@@ -178,7 +261,17 @@ select distinct salary  from employees  where job_id='ST_MAN';
 -- -------------------------
 -- Hunold    IT_PROG    9000.00
 -- Ernst     IT_PROG    6000.00
+select last_name, job_id, salary
+from employees
+where salary in (select distinct salary
+                from employees
+                where job_id='IT_PROG');
 
+select last_name, job_id, salary
+from employees
+where salary =any (select distinct salary
+                from employees
+                where job_id='IT_PROG');
 
 
 -- -------------------------------------------------------------------------------------
@@ -191,10 +284,22 @@ select distinct salary  from employees  where job_id='ST_MAN';
 select employee_id,last_name,manager_id from employees order by 3;
                   
 -- 방법1 (case, in연산자)
-
+select employee_id as "사원번호", last_name as "이름",
+       case  when employee_id in(select distinct manager_id from employees) then '관리자'
+	         else '직원'
+	   end as "구분"      
+from employees
+order by 3,1;
 
 --  방법2 (uinon, in, not in연산자)
-
+select employee_id as "사원번호", last_name as "이름", '관리자' as "구분"
+from employees
+where employee_id in (select distinct manager_id from employees)
+union
+select employee_id as "사원번호", last_name as "이름", '직원' as "구분"
+from employees
+where employee_id not in (select distinct manager_id from employees where manager_id is not null)
+order by 3;
 
 select * from employees;  
 -- ----------------------------------------------------------------------------------------------
@@ -232,7 +337,9 @@ commit;
 select * from goods;
 
 -- 테스트1) group by
-
+select item, sum(cost)as "sum" 
+from goods
+group by item;
 
 -- [결과]
 -- item   sum
@@ -243,7 +350,7 @@ select * from goods;
 -- 테스트2) group by ~ with rollup
 select item, sum(cost)as "sum" 
 from goods 
-group by item with rollup 
+group by item with rollup;
 
 -- [결과]
 -- item  sum
@@ -257,6 +364,7 @@ item varchar(10),
 cnt int,
 cost int);
 
+
 insert into storegoods(store,item,cnt,cost) values("A Mart", "apple", 1, 100);
 insert into storegoods(store,item,cnt,cost) values("A Mart", "orange", 1, 200);
 insert into storegoods(store,item,cnt,cost) values("A Mart", "orange", 2, 390);
@@ -268,7 +376,9 @@ insert into storegoods(store,item,cnt,cost) values("C Mart", "orange", 1, 190);
 select * from storegoods;
 
 -- 테스트1) group by
-
+select store, item, sum(cnt) as "all_cnt", sum(cost) as "all_cost" 
+from storegoods 
+group by store, item;
 
 
 

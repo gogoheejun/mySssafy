@@ -5,7 +5,7 @@
                
 --         Sub  Query      -- 1개결과 
 
---2) 다중행 서브쿼리(여러행반환) : in, any, all
+-- 2) 다중행 서브쿼리(여러행반환) : in, any, all
 --     Main Query
      
 --          Sub Query      -- 여러개의 결과  

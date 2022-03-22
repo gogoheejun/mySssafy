@@ -1,0 +1,20 @@
+step03_JSP   --Dynamic Web Project
+                Dynamic Web Module Version: 4.0
+                Context root: lab
+                Content directory: WebContent
+                Generate web.xml deployment descriptor(체크안함)
+
+src
+
+WebContent
+	  example  --폴더
+	     exam01.jsp
+	     exam02.jsp
+	     forExample.jsp
+	     ifExample.html / ifExample.jsp  
+	     whileExample.html / whileExample.jsp     
+	     
+	     
+========================================================	     
+eclipse.ini파일 맨 마지막에서	     
+-Dfile.encoding=utf-8             

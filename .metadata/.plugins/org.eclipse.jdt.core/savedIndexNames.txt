@@ -6,7 +6,6 @@ INDEX VERSION 1.131+C:\SSAFY\00myssafy\.metadata\.plugins\org.eclipse.jdt.core
 2348715892.index
 2645547192.index
 3314081954.index
-3262412566.index
 1125075797.index
 2545637268.index
 1046953421.index
@@ -21,7 +20,6 @@ INDEX VERSION 1.131+C:\SSAFY\00myssafy\.metadata\.plugins\org.eclipse.jdt.core
 2303087893.index
 2027911770.index
 1676931847.index
-1045179984.index
 2580451238.index
 1551308222.index
 788392666.index
